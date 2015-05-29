@@ -75,6 +75,16 @@ export async function run() {
       runWorker()
     }
   } else {
+    // Hook into termination and interrupt signals to gracefully stop
+    let gracefulExit = _.once(function() {
+      rabbit.closeAll().then(function() {
+        process.exit(128)
+      })
+    })
+
+    process.on("SIGTERM", gracefulExit)
+    process.on("SIGINT", gracefulExit)
+
     // Report that we are ready to accept tasks
     log.warn("Ready")
 

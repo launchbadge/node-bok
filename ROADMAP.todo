@@ -1,1 +1,2 @@
 ☐ Queues (Channels) to allow isolation of task execution
+☐ Restart workers when they go down
