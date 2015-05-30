@@ -34,6 +34,7 @@
     "gulp-git": "^1.2.4",
     "gulp-load-plugins": "^0.10.0",
     "gulp-mocha": "^2.1.0",
+    "gulp-shell": "^0.4.1",
     "gulp-tag-version": "^1.2.1",
     "run-sequence": "^1.1.0"
   },

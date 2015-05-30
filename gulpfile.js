@@ -48,7 +48,13 @@ function release(importance) {
 
     .on("end", function() {
       $.git.push("origin", "master", {args: "--follow-tags"}, function() {
-        resolve()
+        gulp.src('')
+          .pipe($.shell([
+            "npm publish"
+          ]))
+          .on("end", function() {
+            resolve()
+          })
       })
     })
   })
