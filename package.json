@@ -34,5 +34,10 @@
     "gulp-load-plugins": "^0.10.0",
     "gulp-mocha": "^2.1.0",
     "run-sequence": "^1.1.0"
+  },
+  "scripts": {
+    "test": "gulp",
+    "lint": "gulp lint",
+    "prepublish": "gulp build"
   }
 }
