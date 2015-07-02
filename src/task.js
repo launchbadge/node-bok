@@ -9,7 +9,7 @@ export let tasks = {}
 
 let eagerExecution = false
 if (config.has("bok.eager")) {
-  config.get("bok.eager")
+  eagerExecution = config.get("bok.eager")
 }
 
 function Task(name, method) {
@@ -19,7 +19,11 @@ function Task(name, method) {
     return new Promise((resolve, reject) => {
       assertTopology().then(function() {
         if (eagerExecution) {
-          method.then(resolve).catch(reject)
+          method({
+            body: params,
+            ack: resolve,
+            reject
+          })
         } else {
           rabbit.publish("bok-x", name, params).done(() => {
             setImmediate(resolve)
