@@ -1,20 +1,23 @@
+import redis from "./redis"
 import shortid from "shortid"
+import _ from "lodash"
 import rabbit from "wascally"
-import config from "config"
+import config from "./config"
 import {assert as assertTopology} from "./topology"
 import microtime from "microtime"
 import log from "./log"
 
 export let tasks = {}
+export let everyTasks = {}
 
 let eagerExecution = false
-if (config.has("bok.eager")) {
-  eagerExecution = config.get("bok.eager")
+if (config.has("eager")) {
+  eagerExecution = config.get("eager")
 }
 
 function Task(name, method) {
-  return function publish() {
-    let params = Array.prototype.slice.call(arguments);
+  function publish() {
+    let params = Array.prototype.slice.call(arguments)
 
     return new Promise((resolve, reject) => {
       assertTopology().then(function() {
@@ -32,10 +35,44 @@ function Task(name, method) {
       })
     })
   }
+
+  publish.every = function(number, key) {
+    // Convert short-hand to long-hand (and default to s)
+    const keys = {
+      y: "years",
+      Q: "quarters",
+      M: "months",
+      w: "weeks",
+      d: "days",
+      h: "hours",
+      m: "minutes",
+      s: "seconds"
+    }
+
+    if (_.values(keys).indexOf(key) < 0) {
+      key = keys[key]
+      if (key == null) {
+        key = "seconds"
+      }
+    }
+
+    // Store this job in redis (if it's not already)
+    redis.hmset(`bok:every:${name}`, {
+      everyNumber: parseInt(number),
+      everyKey: key
+    })
+
+    // Add to everyTasks list
+    everyTasks[name] = publish
+
+    return publish
+  }
+
+  return publish
 }
 
 export function task(name, fn) {
-  let method = async function wrapper(msg) {
+  async function method(msg) {
     try {
       let uid = shortid.generate()
       let timestamp = microtime.now()

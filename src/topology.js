@@ -1,4 +1,4 @@
-import config from "config"
+import config from "./config"
 import rabbit from "wascally"
 
 let connected = false
@@ -14,10 +14,10 @@ function configure(rabbit) {
   return rabbit.configure({
     // Gather the broker connection information
     connection: {
-      user: config.get("bok.broker.user"),
-      pass: config.get("bok.broker.password"),
-      server: [config.get("bok.broker.host")],
-      port: config.get("bok.broker.port"),
+      user: config.get("rabbit.user"),
+      pass: config.get("rabbit.password"),
+      server: [config.get("rabbit.host")],
+      port: config.get("rabbit.port"),
       vhost: "%2f",
       replyQueue: false,
     },
