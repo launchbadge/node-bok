@@ -76,7 +76,7 @@ export function task(name, fn) {
     try {
       let uid = shortid.generate()
       let timestamp = microtime.now()
-      log.info({id: uid}, "Received task", name)
+      log.debug({id: uid}, "Received task", name)
 
       await fn.apply(undefined, msg.body)
 
