@@ -6,7 +6,7 @@ import os from "os"
 import log from "./log"
 import {run as runWorker, stop as stopWorker} from "./worker"
 
-import {task} from "./task"
+import {task, publish} from "./task"
 export {task, publish} from "./task"
 
 function gracefulExit() {
