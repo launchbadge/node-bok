@@ -111,4 +111,4 @@ export async function run() {
   }
 }
 
-export default {run, task}
+export default {run, task, publish}
