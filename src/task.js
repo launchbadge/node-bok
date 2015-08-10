@@ -15,6 +15,16 @@ if (config.has("eager")) {
   eagerExecution = config.get("eager")
 }
 
+export function publish(name, params) {
+  return new Promise((resolve, reject) => {
+    assertTopology().then(function() {
+      rabbit.publish("bok-x", name, params).done(() => {
+        setImmediate(resolve)
+      })
+    })
+  })
+}
+
 function Task(name, method) {
   function publish() {
     let params = Array.prototype.slice.call(arguments)

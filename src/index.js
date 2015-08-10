@@ -7,7 +7,7 @@ import log from "./log"
 import {run as runWorker, stop as stopWorker} from "./worker"
 
 import {task} from "./task"
-export {task} from "./task"
+export {task, publish} from "./task"
 
 function gracefulExit() {
   stopWorker()
@@ -45,8 +45,7 @@ export async function run() {
   }
 
   if (concurrency === true) {
-    // concurrency = os.cpus().length * 2 + 1
-    concurrency = 12
+    concurrency = os.cpus().length * 2 + 1
   } else if (concurrency === false) {
     concurrency = 1
   } else if (concurrency <= 0) {
