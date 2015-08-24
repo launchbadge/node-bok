@@ -29,14 +29,16 @@ function processTasks() {
 }
 
 export async function run() {
-  await assertTopology()
-
   // NOTE: Always setup your handlers before establishing
   //  the connection to the message broker
   for (let key of Object.keys(tasks)) {
     let fn = tasks[key]
     rabbit.handle(key, fn)
   }
+
+  // Start the subscription
+  // TODO: Queue names should be parameterized (at least)
+  await assertTopology({subscribe: true})
 
   // Only CHILD-ID #0 or master worries about this
   if (cluster.isMaster || process.env.CHILD_ID === "0") {
@@ -45,10 +47,6 @@ export async function run() {
       processInterval = setInterval(processTasks, 800)
     }
   }
-
-  // Start the subscription
-  // TODO: Queue names should be parameterized (at least)
-  await rabbit.startSubscription("bok-q", "default")
 }
 
 export function stop() {

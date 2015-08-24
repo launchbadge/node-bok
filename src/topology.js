@@ -3,14 +3,14 @@ import rabbit from "wascally"
 
 let connected = false
 
-export async function assert() {
+export async function assert(options = {}) {
   if (!connected) {
-    await configure(rabbit)
+    await configure(rabbit, options)
     connected = true
   }
 }
 
-function configure(rabbit) {
+function configure(rabbit, options) {
   return rabbit.configure({
     // Gather the broker connection information
     connection: {
@@ -41,7 +41,7 @@ function configure(rabbit) {
       {
         // TODO: Should be parameterized with a defined name
         name: "bok-q",
-        subscribe: false,
+        subscribe: options.subscribe === true,
         limit: 5,
       }
     ],
