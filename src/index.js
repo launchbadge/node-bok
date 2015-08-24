@@ -57,7 +57,7 @@ export async function run() {
     log.info("Connected to amqp://guest:**@localhost:5672//")
   }
 
-  if (cluster.isMaster && concurrency >= 1) {
+  if (cluster.isMaster && concurrency > 1) {
     log.info(
       `Creating cluster of ${concurrency} workers (pre-forking)`)
 
@@ -101,7 +101,7 @@ export async function run() {
     process.on("SIGTERM", onTerminate)
     process.on("SIGINT", onTerminate)
 
-    if (!(concurrency >= 1)) {
+    if (!(concurrency > 1)) {
       // Report that we are ready to accept tasks
       log.warn("Ready")
     }
