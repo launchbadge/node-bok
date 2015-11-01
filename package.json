@@ -1,6 +1,6 @@
 {
   "name": "bok",
-  "version": "0.2.6",
+  "version": "0.2.7",
   "description": "Distributed Task Queue",
   "main": "lib/index.js",
   "bin": {
