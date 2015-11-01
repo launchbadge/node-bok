@@ -19,7 +19,7 @@ function configure(rabbit, options) {
       server: [config.get("rabbit.host")],
       port: config.get("rabbit.port"),
       vhost: "%2f",
-      replyQueue: false,
+      // replyQueue: false,
     },
 
     // Configure the single exchange
