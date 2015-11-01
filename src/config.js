@@ -5,6 +5,9 @@ var config = require("config")
 let defaults = {
   eager: false,
 
+  // Namespace in the AMQP world
+  namespace: "",
+
   // Enable cluster by-default if we're in production
   cluster: (process.env.NODE_ENV === "production"),
 

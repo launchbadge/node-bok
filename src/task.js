@@ -18,7 +18,7 @@ if (config.has("eager")) {
 export function publish(name, params) {
   return new Promise((resolve, reject) => {
     assertTopology().then(function() {
-      rabbit.publish("bok-x", name, params).done(() => {
+      rabbit.publish("bok-x_" + config.get("namespace"), name, params).done(() => {
         setImmediate(resolve)
       })
     })
@@ -38,7 +38,7 @@ function Task(name, method) {
             reject
           })
         } else {
-          rabbit.publish("bok-x", name, params).done(() => {
+          rabbit.publish("bok-x_" + config.get("namespace"), name, params).done(() => {
             setImmediate(resolve)
           })
         }

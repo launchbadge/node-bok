@@ -26,7 +26,7 @@ function configure(rabbit, options) {
     exchanges: [
       {
         // TODO: Should be parameterized with a defined name
-        name: "bok-x",
+        name: "bok-x_" + config.get("namespace"),
         type: "fanout",
       }
     ],
@@ -40,7 +40,7 @@ function configure(rabbit, options) {
       // queues to handle throughput issues.
       {
         // TODO: Should be parameterized with a defined name
-        name: "bok-q",
+        name: "bok-q_" + config.get("namespace"),
         subscribe: options.subscribe === true,
         limit: 5,
       }
@@ -50,8 +50,8 @@ function configure(rabbit, options) {
     bindings: [
       {
         // TODO: Should be parameterized with a defined name
-        exchange: "bok-x",
-        target: "bok-q",
+        exchange: "bok-x_" + config.get("namespace"),
+        target: "bok-q_" + config.get("namespace"),
         keys: []
       }
     ]
