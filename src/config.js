@@ -3,6 +3,9 @@ var config = require("config")
 
 // Declare default configuration
 let defaults = {
+  // Name for logging
+  name: config.has("name") ? config.get("name") : "Bok",
+
   eager: false,
 
   // Namespace in the AMQP world

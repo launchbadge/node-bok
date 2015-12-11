@@ -10,18 +10,18 @@ let processInterval = null
 function processTasks() {
   for (let name of Object.keys(everyTasks)) {
     let key = `bok:every:${name}`
-    redis.hgetall(key).then(function(res) {
+    redis.hgetallAsync(key).then(function(res) {
       let lastRanAt = res.lastRanAt
       if (!lastRanAt) {
         // Schedule immediately
         everyTasks[name]()
-        redis.hset(key, "lastRanAt", moment.utc().format())
+        redis.hsetAsync(key, "lastRanAt", moment.utc().format())
       } else {
         let diff = moment.utc().diff(lastRanAt, res.everyKey)
         if (diff >= res.everyNumber) {
           // Schedule now
           everyTasks[name]()
-          redis.hset(key, "lastRanAt", moment.utc().format())
+          redis.hsetAsync(key, "lastRanAt", moment.utc().format())
         }
       }
     })

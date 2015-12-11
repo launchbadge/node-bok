@@ -1,3 +1,18 @@
 {
-  "stage": 0
+  "plugins": [
+    // Syntax
+    "syntax-async-functions",
+    "syntax-async-generators",
+
+    // ES2015 (ES6+)
+    "transform-es2015-modules-commonjs",
+    "transform-es2015-parameters",
+    "transform-es2015-shorthand-properties",
+
+    // ES7+
+    "transform-async-to-generator",
+
+    // Strict Mode
+    "transform-strict-mode"
+  ]
 }

@@ -1,5 +1,10 @@
-import redis from "then-redis"
+import redis from "redis"
+import bluebird from "bluebird"
 import config from "./config"
+
+// NOTE: Promisify all redis methods
+bluebird.promisifyAll(redis.RedisClient.prototype)
+bluebird.promisifyAll(redis.Multi.prototype)
 
 // Create and configure the redis client
 let client = redis.createClient(
